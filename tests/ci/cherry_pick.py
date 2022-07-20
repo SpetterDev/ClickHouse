@@ -470,7 +470,7 @@ def main():
 
     args = parse_args()
     if args.debug_helpers:
-        logging.getLogger("github_helper").setLevel(logging.DEBUG)
+        logging.getLogger( "github_helper" ).setLevel(logging.DEBUG)
         logging.getLogger("git_helper").setLevel(logging.DEBUG)
     token = args.token or get_best_robot_token()
 
