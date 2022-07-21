@@ -25,8 +25,10 @@ RUN apt-get update \
     && apt-key add /tmp/llvm-snapshot.gpg.key \
     && export CODENAME="$(lsb_release --codename --short | tr 'A-Z' 'a-z')" \
     && echo "deb [trusted=yes] https://apt.llvm.org/${CODENAME}/ llvm-toolchain-${CODENAME}-${LLVM_VERSION} main" >> \
-        /etc/apt/sources.list \
+        /etc/apt/sources.list.d/clang.conf \
     && apt-get clean
+
+# FIXME: clang-13 is here for broken TSAN
 
 # initial packages
 RUN apt-get update \
@@ -34,6 +36,8 @@ RUN apt-get update \
         bash \
         build-essential \
         ccache \
+        clang-13 \
+        clang-tidy-13 \
         clang-${LLVM_VERSION} \
         clang-tidy-${LLVM_VERSION} \
         cmake \
@@ -117,6 +121,15 @@ ENV GOCACHE=/workdir/
 
 RUN mkdir /workdir && chmod 777 /workdir
 WORKDIR /workdir
+
+RUN echo "deb [trusted=yes] https://apt.llvm.org/${CODENAME}/ llvm-toolchain-${CODENAME}-13 main" >> \
+        /etc/apt/sources.list.d/clang.conf \
+    && apt-get update \
+    && apt-get install \
+        clang-13 \
+        clang-tidy-13 \
+        --yes --no-install-recommends \
+    && apt-get clean
 
 COPY build.sh /
 CMD ["bash", "-c", "/build.sh 2>&1"]
