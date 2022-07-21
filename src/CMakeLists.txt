@@ -376,7 +376,7 @@ if (TARGET ch_contrib::rdkafka)
 endif()
 
 if (TARGET ch_contrib::nats_io)
-    dbms_target_link_libraries(PRIVATE ch_contrib::nats_io)
+    dbms_target_link_libraries(PRIVATE ch_contrib::nats_io ch_contrib::uv)
 endif()
 
 if (TARGET ch_contrib::sasl2)
@@ -401,11 +401,11 @@ dbms_target_link_libraries (
         clickhouse_parsers
         ch_contrib::lz4
         Poco::JSON
-        Poco::MongoDB
         string_utils
     PUBLIC
         boost::system
         clickhouse_common_io
+        Poco::MongoDB
 )
 
 if (TARGET ch::mysqlxx)
