@@ -36,8 +36,6 @@ RUN apt-get update \
         bash \
         build-essential \
         ccache \
-        clang-13 \
-        clang-tidy-13 \
         clang-${LLVM_VERSION} \
         clang-tidy-${LLVM_VERSION} \
         cmake \
