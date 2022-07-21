@@ -25,7 +25,7 @@ RUN apt-get update \
     && apt-key add /tmp/llvm-snapshot.gpg.key \
     && export CODENAME="$(lsb_release --codename --short | tr 'A-Z' 'a-z')" \
     && echo "deb [trusted=yes] https://apt.llvm.org/${CODENAME}/ llvm-toolchain-${CODENAME}-${LLVM_VERSION} main" >> \
-        /etc/apt/sources.list.d/clang.conf \
+        /etc/apt/sources.list.d/clang.list \
     && apt-get clean
 
 # FIXME: clang-13 is here for broken TSAN
