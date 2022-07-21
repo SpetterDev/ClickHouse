@@ -120,7 +120,8 @@ ENV GOCACHE=/workdir/
 RUN mkdir /workdir && chmod 777 /workdir
 WORKDIR /workdir
 
-RUN echo "deb [trusted=yes] https://apt.llvm.org/${CODENAME}/ llvm-toolchain-${CODENAME}-13 main" >> \
+RUN export CODENAME="$(lsb_release --codename --short | tr 'A-Z' 'a-z')" \
+    && echo "deb [trusted=yes] https://apt.llvm.org/${CODENAME}/ llvm-toolchain-${CODENAME}-13 main" >> \
         /etc/apt/sources.list.d/clang.list \
     && apt-get update \
     && apt-get install \
